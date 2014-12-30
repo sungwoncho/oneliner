@@ -3,10 +3,12 @@ angular
     'ngRoute',
     'templates'
   ])
-  .config(['$routeProvider', function($routeProvider) {
+  .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'index.html',
         controller: 'OnelinesCtrl'
-      })
+      });
+
+    $locationProvider.html5Mode(true);
   }]);
