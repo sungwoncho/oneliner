@@ -7,6 +7,11 @@ class ApplicationController < ActionController::Base
   # Whitelist actions that do not need authentication
   before_action :authenticate_user!
 
-  def index
-  end
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+
+  private
+    def record_not_found(error)
+      render json: { error: error.message }, status: 404
+    end
+
 end

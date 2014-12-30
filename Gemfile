@@ -48,9 +48,9 @@ group :test do
   gem 'faker'
   gem 'capybara'
   gem 'database_cleaner'
+  gem 'shoulda-matchers'
 end
 
 gem 'bower-rails'
 gem 'angular-rails-templates'
 gem 'devise'
-gem 'simple_form'

@@ -1,5 +1,6 @@
 class OnelinesController < ApplicationController
-  before_action :set_oneline, only: [:show, :edit, :update, :destroy]
+  before_action :set_oneline, only: [:show, :destroy]
+  skip_before_action :authenticate_user!
 
   # GET /onelines.json
   def index
@@ -12,26 +13,19 @@ class OnelinesController < ApplicationController
 
   # POST /onelines.json
   def create
-    @oneline = Oneline.new(oneline_params)
+    oneline = Oneline.new(oneline_params)
 
-    respond_to do |format|
-      if @oneline.save
-        format.html { redirect_to @oneline, notice: 'Oneline was successfully created.' }
-        format.json { render :show, status: :created, location: @oneline }
-      else
-        format.html { render :new }
-        format.json { render json: @oneline.errors, status: :unprocessable_entity }
-      end
+    if oneline.save
+      head 204, location: oneline
+    else
+      render json: oneline.errors, status: 422
     end
+
   end
 
   # DELETE /onelines/1.json
   def destroy
-    @oneline.destroy
-    respond_to do |format|
-      format.html { redirect_to onelines_url, notice: 'Oneline was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    head 204 if @oneline.destroy
   end
 
   private

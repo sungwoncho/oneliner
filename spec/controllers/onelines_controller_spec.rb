@@ -19,5 +19,108 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe OnelinesController, :type => :controller do
+  render_views
 
+  let(:json) { JSON.parse(response.body, symbolize_names: true) }
+
+  let!(:new_york) { create(:oneline, subject: 'New York') }
+  let!(:newage) { create(:oneline, subject: 'Newage') }
+  let!(:rum_ham) { create(:oneline, subject: 'Rum Ham') }
+
+  describe 'GET index' do
+
+    before :each do
+      get :index, format: :json
+    end
+
+    it 'returns 200 status' do
+      expect(response.status).to eq 200
+    end
+
+    it 'returns all onelines' do
+      subjects = json.map { |o| o[:subject] }
+      expect(subjects).to match_array(['New York', 'Newage', 'Rum Ham'])
+    end
+  end
+
+  describe 'GET show' do
+
+    before :each do
+      get :show, id: new_york, format: :json
+    end
+
+    it 'returns 200 status' do
+      expect(response.status).to eq 200
+    end
+
+    context 'when exists' do
+      it 'returns the oneline' do
+        expect(json[:subject]).to eq 'New York'
+      end
+    end
+
+    context 'when does not exist' do
+      it 'returns 404 status' do
+        get :show, id: 100, format: :json
+        expect(response.status).to eq 404
+      end
+    end
+  end
+
+  describe 'POST create' do
+
+    context 'when successful' do
+
+      before :each do
+        post :create, format: :json, oneline: attributes_for(:oneline, subject: 'Friday')
+      end
+
+      it 'creates a new oneline' do
+        expect {
+          post :create, format: :json, oneline: attributes_for(:oneline)
+        }.to change(Oneline, :count).by(1)
+      end
+
+      it 'returns 204 status' do
+        expect(response.status).to eq 204
+      end
+
+      it 'returns the location of the created oneline' do
+        expect(response.location).to eq oneline_url(Oneline.last)
+      end
+    end
+
+    context 'when unsuccessful' do
+      before :each do
+        post :create, format: :json, oneline: attributes_for(:oneline, subject: nil)
+      end
+
+      it 'returns 422 status' do
+        expect(response.status).to eq 422
+      end
+    end
+  end
+
+  describe 'DELETE destroy' do
+
+    context 'when exists' do
+      it 'destroys the record' do
+        expect {
+          delete :destroy, format: :json, id: new_york
+        }.to change(Oneline, :count).by(-1)
+      end
+
+      it 'returns 204 status' do
+        delete :destroy, format: :json, id: new_york
+        expect(response.status).to eq 204
+      end
+    end
+
+    context 'when does not exist' do
+      it 'returns 404 status' do
+        delete :destroy, format: :json, id: 100
+        expect(response.status).to eq 404
+      end
+    end
+  end
 end
