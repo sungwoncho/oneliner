@@ -4,7 +4,7 @@ class OnelinesController < ApplicationController
 
   # GET /onelines.json
   def index
-    @onelines = Oneline.all
+    @onelines = Oneline.search(params[:keyword])
   end
 
   # GET /onelines/1.json

@@ -27,19 +27,38 @@ RSpec.describe OnelinesController, :type => :controller do
   let!(:newage) { create(:oneline, subject: 'Newage') }
   let!(:rum_ham) { create(:oneline, subject: 'Rum Ham') }
 
+  def extract_subject
+    ->(object) { object[:subject] }
+  end
+
   describe 'GET index' do
 
-    before :each do
-      get :index, format: :json
+    context 'without keyword' do
+      before :each do
+        get :index, format: :json
+      end
+
+      it 'returns 200 status' do
+        expect(response.status).to eq 200
+      end
+
+      it 'returns all onelines' do
+        expect(json.map(&extract_subject)).to match_array(['New York', 'Newage', 'Rum Ham'])
+      end
     end
 
-    it 'returns 200 status' do
-      expect(response.status).to eq 200
-    end
+    context 'with keyword' do
+      before :each do
+        get :index, format: :json, keyword: 'new'
+      end
 
-    it 'returns all onelines' do
-      subjects = json.map { |o| o[:subject] }
-      expect(subjects).to match_array(['New York', 'Newage', 'Rum Ham'])
+      it 'returns 200 status' do
+        expect(response.status).to eq 200
+      end
+
+      it 'returns oneline with matching subjects' do
+        expect(json.map(&extract_subject)).to match_array(['New York', 'Newage'])
+      end
     end
   end
 
