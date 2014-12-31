@@ -1,3 +1,1 @@
-json.array!(@onelines) do |oneline|
-  json.extract! oneline, :id, :subject
-end
+json.array! @onelines, partial: 'oneline', as: :oneline

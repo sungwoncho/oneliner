@@ -1,6 +1,7 @@
 angular
   .module('oneliner', [
     'ngRoute',
+    'ngResource',
     'templates'
   ])
   .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
