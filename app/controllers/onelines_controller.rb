@@ -13,12 +13,12 @@ class OnelinesController < ApplicationController
 
   # POST /onelines.json
   def create
-    oneline = Oneline.new(oneline_params)
+    @oneline = Oneline.new(oneline_params)
 
-    if oneline.save
-      head 204, location: oneline
+    if @oneline.save
+      render 'show', status: 201
     else
-      render json: oneline.errors, status: 422
+      render json: @oneline.errors, status: 422
     end
 
   end
