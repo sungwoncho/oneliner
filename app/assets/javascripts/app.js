@@ -9,6 +9,10 @@ angular
       .when('/', {
         templateUrl: 'index.html',
         controller: 'OnelinesCtrl'
+      })
+      .when('/onelines/new', {
+        templateUrl: 'form.html',
+        controller: 'OnelinesCtrl'
       });
 
     $locationProvider.html5Mode(true);

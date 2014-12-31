@@ -101,11 +101,15 @@ RSpec.describe OnelinesController, :type => :controller do
       end
 
       it 'returns 204 status' do
-        expect(response.status).to eq 204
+        expect(response.status).to eq 201
       end
 
-      it 'returns the location of the created oneline' do
-        expect(response.location).to eq oneline_url(Oneline.last)
+      # it 'returns the location of the created oneline' do
+      #   expect(response.location).to eq oneline_url(Oneline.last)
+      # end
+
+      it 'returns the newly created oneline' do
+        expect(json[:subject]).to eq 'Friday'
       end
     end
 

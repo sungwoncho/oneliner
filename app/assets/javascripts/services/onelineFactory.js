@@ -2,5 +2,5 @@
 
 angular.module('oneliner')
   .factory('onelineFactory', ['$resource', function($resource) {
-    return $resource('/onelines/:onelineId', {onelineId: '@id', format: 'json'});
+    return $resource('api/onelines/:onelineId', {onelineId: '@id', format: 'json'});
   }]);
