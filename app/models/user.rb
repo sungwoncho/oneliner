@@ -8,8 +8,16 @@ class User < ActiveRecord::Base
   has_many :votes
 
   def upvote(oneline)
-    oneline.increment!(:cached_votes)
-    votes.create(oneline: oneline, vote_type: 'up')
+    if downvoted?(oneline)
+      votes.find_by(oneline_id: oneline.id, vote_type: 'down').update(vote_type: 'up')
+      oneline.increment!(:cached_votes, 2)
+    elsif upvoted?(oneline)
+      votes.find_by(oneline_id: oneline.id, vote_type: 'up').destroy
+      oneline.increment(:cached_votes, -1)
+    else
+      votes.create(oneline: oneline, vote_type: 'up')
+      oneline.increment!(:cached_votes)
+    end
   end
 
   def upvoted?(oneline)

@@ -40,21 +40,43 @@ RSpec.describe User, :type => :model do
       context 'if user has downvoted before' do
 
         before :each do
-          create(:vote, user: user, vote_type: 'down')
+          create(:vote, user: user, oneline: oneline, vote_type: 'down')
         end
 
-        it 'deletes the downvote record' do
+        it "changes the vote_type of the record to up" do
+          vote = Vote.find_by(user: user, vote_type: 'down')
+
           user.upvote(oneline)
-          downvote = Vote.find_by(user: user, vote_type: 'down')
-          # expect(downvote).to be nil
+          vote.reload
+
+          expect(vote.vote_type).to eq 'up'
         end
 
-        it "assigns vote_type 'up' to the vote" do
-          user.upvote(oneline)
-          expect(Vote.last.vote_type).to eq 'up'
+        it 'increases the cached_votes by 2' do
+          expect {
+            user.upvote(oneline)
+          }.to change(oneline, :cached_votes).by(2)
         end
 
+      end
 
+      context 'if user has upvoted before' do
+
+        before :each do
+          create(:vote, user: user, oneline: oneline, vote_type: 'up')
+        end
+
+        it 'delete the vote' do
+          expect {
+            user.upvote(oneline)
+          }.to change(Vote, :count).by(-1)
+        end
+
+        it 'decreases the cached_votes by 1' do
+          expect {
+            user.upvote(oneline)
+          }.to change(oneline, :cached_votes).by(-1)
+        end
       end
     end
 

@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   root to: 'static_pages#home'
 
   scope "api", defaults: { format: :json } do
-    resources :onelines
+    resources :onelines do
+      member do
+        resources :votes, only: [:create, :destroy]
+      end
+    end
   end
 
   get '*path' => 'static_pages#home'
