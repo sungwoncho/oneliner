@@ -80,6 +80,71 @@ RSpec.describe User, :type => :model do
       end
     end
 
+    describe '#downvote' do
+      context 'when user has not voted' do
+        it 'creates a vote record' do
+          expect {
+            user.downvote(oneline)
+          }.to change(Vote, :count).by(1)
+        end
+
+        it "assigns 'down' to vote_type" do
+          user.downvote(oneline)
+          expect(Vote.last.vote_type).to eq 'down'
+        end
+
+        it 'decreases the cached_votes by 1' do
+          expect {
+            user.downvote(oneline)
+          }.to change(oneline, :cached_votes).by(-1)
+        end
+      end
+
+      context 'when user has upvoted before' do
+
+        before :each do
+          create(:vote, user: user, oneline: oneline, vote_type: 'up')
+        end
+
+        it "changes the vote_type of the record to down" do
+          vote = Vote.find_by(user: user, vote_type: 'up')
+
+          user.downvote(oneline)
+          vote.reload
+
+          expect(vote.vote_type).to eq 'down'
+        end
+
+        it 'decreases the cached_votes by 2' do
+          expect {
+            user.downvote(oneline)
+          }.to change(oneline, :cached_votes).by(-2)
+        end
+      end
+
+      context 'when user has downvoted before' do
+
+        before :each do
+          create(:vote, user: user, oneline: oneline, vote_type: 'down')
+        end
+
+        it 'delete the vote' do
+          expect {
+            user.downvote(oneline)
+          }.to change(Vote, :count).by(-1)
+        end
+
+        it 'increases the cached_votes by 1' do
+          expect {
+            user.downvote(oneline)
+          }.to change(oneline, :cached_votes).by(1)
+        end
+
+      end
+    end
+
+
+
     describe '#upvoted?' do
       context 'if user has upvoted' do
         it 'returns true' do
