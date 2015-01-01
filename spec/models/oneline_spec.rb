@@ -9,4 +9,29 @@ RSpec.describe Oneline, :type => :model do
     it { should validate_presence_of(:subject) }
     it { should validate_presence_of(:definition) }
   end
+
+  describe 'association' do
+    it { should belong_to(:author).class_name('User').with_foreign_key('author_id') }
+  end
+
+  describe 'instance methods' do
+
+    let(:user) { create(:user) }
+    let(:user_2) { create(:user) }
+    let(:oneline) { create(:oneline, author_id: user.id) }
+
+    describe '#is_author?' do
+      context 'when current user is author of oneline' do
+        it 'returns true' do
+          expect(oneline.is_author?(user)).to be true
+        end
+      end
+
+      context 'when current user is not the author' do
+        it 'returns false' do
+          expect(oneline.is_author?(user_2)).to be false
+        end
+      end
+    end
+  end
 end

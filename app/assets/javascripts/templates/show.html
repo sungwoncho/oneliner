@@ -1,0 +1,21 @@
+<div flash-alert active-class="in" class="alert fade text-center">
+  <strong class="alert-heading">Notification:</strong>
+  <span class="alert-message">{{ flash.message }}</span>
+</div>
+
+<section class="col-md-6 col-md-offset-3">
+  <h1>{{oneline.subject}}</h1>
+  <p>{{oneline.definition}}</p>
+<section>
+
+<div class="row">
+  <div class="col-md-3">
+    <button ng-click="back()" class="btn btn-default">
+      &larr; Back
+    </button>
+  </div>
+
+  <div class="col-md-9 text-right" ng-show="oneline.author.is_author">
+    <button ng-click="delete()" class="btn btn-danger"> Delete </button>
+  </div>
+</div>

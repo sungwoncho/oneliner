@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   scope "api", defaults: { format: :json } do
     resources :onelines
   end
-  
+
   get '*path' => 'static_pages#home'
 
   # The priority is based upon order of creation: first created -> highest priority.

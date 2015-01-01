@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141230050914) do
+ActiveRecord::Schema.define(version: 20150101042124) do
 
   create_table "onelines", force: true do |t|
     t.string   "subject"
     t.string   "definition"
-    t.integer  "user_id"
+    t.integer  "author_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -25,7 +25,7 @@ puts "created #{User.count} users."
   Oneline.create!(
     subject: Faker::Lorem.word,
     definition: Faker::Lorem.sentence,
-    user_id: (1..10).to_a.sample
+    author_id: (1..10).to_a.sample
   )
 end
 

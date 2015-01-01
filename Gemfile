@@ -59,3 +59,4 @@ end
 gem 'bower-rails'
 gem 'angular-rails-templates'
 gem 'devise'
+gem 'simple_form'

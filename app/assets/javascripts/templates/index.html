@@ -17,6 +17,6 @@
 </section>
 
 <div ng-repeat="oneline in onelines">
-  <h1>{{ oneline.subject }}</h1>
+  <h1><a href ng-click="view(oneline.id)">{{ oneline.subject }}</a></h1>
   <p>{{ oneline.definition }}</p>
 </div>
