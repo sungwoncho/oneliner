@@ -39,14 +39,6 @@ angular.module('oneliner')
       $scope.back();
     }
 
-    $scope.owner = function(current_user_id) {
-      if ($scope.oneline.user_id == current_user_id) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-
     // For show
     if ($routeParams.onelineId) {
       onelineFactory.get({ onelineId: $routeParams.onelineId }, function(oneline) {
