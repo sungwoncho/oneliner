@@ -27,8 +27,14 @@ RSpec.describe OnelinesController, :type => :controller do
   let!(:newage) { create(:oneline, subject: 'Newage') }
   let!(:rum_ham) { create(:oneline, subject: 'Rum Ham') }
 
+  let(:user) { create(:user) }
+
   def extract_subject
     ->(object) { object[:subject] }
+  end
+
+  before :each do
+    sign_in user
   end
 
   describe 'GET index' do
@@ -88,6 +94,12 @@ RSpec.describe OnelinesController, :type => :controller do
 
   describe 'POST create' do
 
+    it 'requires login' do
+      sign_out user
+      post :create, format: :json, oneline: attributes_for(:oneline, subject: nil)
+      expect(response).to require_login
+    end
+
     context 'when successful' do
 
       before :each do
@@ -98,6 +110,10 @@ RSpec.describe OnelinesController, :type => :controller do
         expect {
           post :create, format: :json, oneline: attributes_for(:oneline)
         }.to change(Oneline, :count).by(1)
+      end
+
+      it 'sets the authorship of the oneline' do
+        expect(Oneline.last.author).to eq user
       end
 
       it 'returns 204 status' do

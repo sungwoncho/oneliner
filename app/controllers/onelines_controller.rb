@@ -1,6 +1,6 @@
 class OnelinesController < ApplicationController
   before_action :set_oneline, only: [:show, :destroy]
-  skip_before_action :authenticate_user!
+  skip_before_action :authenticate_user!, except: [:create, :destroy]
 
   # GET /onelines.json
   def index
@@ -13,7 +13,7 @@ class OnelinesController < ApplicationController
 
   # POST /onelines.json
   def create
-    @oneline = Oneline.new(oneline_params)
+    @oneline = current_user.authored_onelines.new(oneline_params)
 
     if @oneline.save
       render 'show', status: 201
