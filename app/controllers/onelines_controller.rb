@@ -4,7 +4,9 @@ class OnelinesController < ApplicationController
 
   # GET /onelines.json
   def index
-    @onelines = Oneline.search(params[:keyword]).decorate
+    @onelines = Oneline.search(params[:keyword])
+                .paginate(page: params[:page], per_page: 5)
+                .decorate
   end
 
   # GET /onelines/1.json

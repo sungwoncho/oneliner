@@ -17,4 +17,5 @@
 //= require angular-resource
 //= require angular-rails-templates
 //= require angular-flash
+//= require nginfiniteScroll
 //= require_tree .

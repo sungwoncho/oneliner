@@ -4,7 +4,8 @@ angular
     'ngResource',
     'templates',
     'angular-flash.service',
-    'angular-flash.flash-alert-directive'
+    'angular-flash.flash-alert-directive',
+    'infinite-scroll'
   ])
   .config(['$routeProvider', '$locationProvider', '$httpProvider', 'flashProvider', function($routeProvider, $locationProvider, $httpProvider, flashProvider) {
 
