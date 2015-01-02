@@ -4,7 +4,7 @@ class OnelinesController < ApplicationController
 
   # GET /onelines.json
   def index
-    @onelines = Oneline.search(params[:keyword])
+    @onelines = Oneline.search(params[:keyword]).decorate
   end
 
   # GET /onelines/1.json
@@ -13,7 +13,7 @@ class OnelinesController < ApplicationController
 
   # POST /onelines.json
   def create
-    @oneline = current_user.authored_onelines.new(oneline_params)
+    @oneline = current_user.authored_onelines.new(oneline_params).decorate
 
     if @oneline.save
       render 'show', status: 201
@@ -31,7 +31,7 @@ class OnelinesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_oneline
-      @oneline = Oneline.find(params[:id])
+      @oneline = Oneline.find(params[:id]).decorate
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

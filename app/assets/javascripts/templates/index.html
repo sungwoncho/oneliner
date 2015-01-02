@@ -19,4 +19,7 @@
 <div ng-repeat="oneline in onelines">
   <h1><a href ng-click="view(oneline.id)">{{ oneline.subject }}</a></h1>
   <p>{{ oneline.definition }}</p>
+  <small><a href="users/{{oneline.author.username}}">{{ oneline.author.username }}</a> submitted on {{ oneline.authored_date }}</small>
+
+  <button ng-click="upvote(oneline.id)" class="btn btn-success btn-sm">Upvote</button>
 </div>

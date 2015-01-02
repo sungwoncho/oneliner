@@ -39,6 +39,11 @@ RSpec.describe OnelinesController, :type => :controller do
 
   describe 'GET index' do
 
+    it 'decorates the @onelines' do
+      get :index, format: :json
+      expect(assigns(:onelines)).to be_decorated
+    end
+
     context 'without keyword' do
       before :each do
         get :index, format: :json
@@ -70,6 +75,11 @@ RSpec.describe OnelinesController, :type => :controller do
 
   describe 'GET show' do
 
+    it 'decorates the @onelines' do
+      get :show, id: new_york, format: :json
+      expect(assigns(:oneline)).to be_decorated
+    end
+
     before :each do
       get :show, id: new_york, format: :json
     end
@@ -93,6 +103,11 @@ RSpec.describe OnelinesController, :type => :controller do
   end
 
   describe 'POST create' do
+
+    it 'decorates the @onelines' do
+      post :create, format: :json, oneline: attributes_for(:oneline)
+      expect(assigns(:oneline)).to be_decorated
+    end
 
     it 'requires login' do
       sign_out user
