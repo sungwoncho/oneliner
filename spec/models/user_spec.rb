@@ -14,7 +14,7 @@ RSpec.describe User, :type => :model do
   describe 'instance methods' do
 
     let(:user) { create(:user) }
-    let(:oneline) {create(:oneline)}
+    let(:oneline) {create(:oneline, author_id: user.id)}
 
     describe '#upvote' do
       context 'if user has not voted' do
@@ -168,6 +168,36 @@ RSpec.describe User, :type => :model do
 
       context 'if user has not downvoted' do
         specify { expect(user.downvoted?(oneline)).to be false }
+      end
+    end
+
+    describe '#total_upvotes_received' do
+      it 'counts the total number of upvotes received' do
+        create(:vote, user_id: 2, oneline: oneline, vote_type: 'up')
+        create(:vote, user_id: 3, oneline: oneline, vote_type: 'up')
+        create(:vote, user_id: 4, oneline: oneline, vote_type: 'up')
+
+        expect(user.total_upvotes_received).to eq 3
+      end
+    end
+
+    describe '#total_downvotes_received' do
+      it 'counts the total number of downvotes received' do
+        create(:vote, user_id: 2, oneline: oneline, vote_type: 'down')
+        create(:vote, user_id: 3, oneline: oneline, vote_type: 'down')
+        create(:vote, user_id: 4, oneline: oneline, vote_type: 'down')
+
+        expect(user.total_downvotes_received).to eq 3
+      end
+    end
+
+    describe '#wisdom' do
+      it 'returns total upvotes - total downvotes' do
+        create(:vote, user_id: 2, oneline: oneline, vote_type: 'up')
+        create(:vote, user_id: 3, oneline: oneline, vote_type: 'up')
+        create(:vote, user_id: 4, oneline: oneline, vote_type: 'down')
+
+        expect(user.wisdom).to eq 1
       end
     end
   end

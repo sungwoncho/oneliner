@@ -44,4 +44,16 @@ class User < ActiveRecord::Base
   def to_param
     username
   end
+
+  def total_upvotes_received
+    Vote.joins(:oneline).where(onelines: {author_id: self.id}, votes: {vote_type: 'up'}).count
+  end
+
+  def total_downvotes_received
+    Vote.joins(:oneline).where(onelines: {author_id: self.id}, votes: {vote_type: 'down'}).count
+  end
+
+  def wisdom
+    total_upvotes_received - total_downvotes_received
+  end
 end
