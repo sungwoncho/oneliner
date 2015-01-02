@@ -1,1 +1,17 @@
-@import 'bootstrap.min'
+@import 'bootstrap';
+@import 'bootstrap.min';
+@import 'color';
+
+.oneline {
+  padding: 30px 50px;
+  background-color: $oneline-bg;
+  margin-bottom: 10px;
+}
+
+.oneline-list {
+  margin-top: 25px;
+}
+
+.vote-action {
+  margin-top: 20px;
+}

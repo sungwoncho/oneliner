@@ -12,6 +12,9 @@ RSpec.describe Oneline, :type => :model do
 
   describe 'association' do
     it { should belong_to(:author).class_name('User').with_foreign_key('author_id') }
+    it { should have_many(:votes) }
+    it { should have_many(:upvotes) }
+    it { should have_many(:downvotes) }
   end
 
   describe 'instance methods' do
@@ -31,6 +34,22 @@ RSpec.describe Oneline, :type => :model do
 
       context 'when user is nil' do
         specify { expect(oneline.is_author?(nil)).to be false }
+      end
+    end
+
+    describe '#upvote_count' do
+      it 'counts the upvote' do
+        3.times { create(:vote, oneline: oneline, vote_type: 'up') }
+
+        expect(oneline.upvote_count).to eq 3
+      end
+    end
+
+    describe '#downvote_count' do
+      it 'counts the downvote' do
+        3.times { create(:vote, oneline: oneline, vote_type: 'down') }
+
+        expect(oneline.downvote_count).to eq 3
       end
     end
   end

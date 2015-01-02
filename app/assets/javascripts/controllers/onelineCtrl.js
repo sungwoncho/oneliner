@@ -30,12 +30,21 @@ angular.module('oneliner')
       $scope.back();
     };
 
+    var voteUpdate = function(response) {
+      $scope.oneline.upvoted = response.data.upvoted;
+      $scope.oneline.downvoted = response.data.downvoted;
+      $scope.oneline.upvote_count = response.data.upvote_count;
+      $scope.oneline.downvote_count = response.data.downvote_count;
+    }
+
     $scope.upvote = function(onelineId) {
       votes.upvote(onelineId)
+        .then(voteUpdate);
     };
 
     $scope.downvote = function(onelineId) {
       votes.downvote(onelineId)
-    }
+        .then(voteUpdate);
+    };
 
   }]);

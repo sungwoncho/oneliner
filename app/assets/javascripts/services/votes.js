@@ -5,11 +5,13 @@ angular.module('oneliner')
     var api = {};
 
     api.upvote = function(onelineId) {
-      $http.post('api/onelines/' + onelineId + '/votes?vote_type=up')
+      var promise = $http.post('api/onelines/' + onelineId + '/votes?vote_type=up');
+      return promise;
     };
 
     api.downvote = function(onelineId) {
-      $http.post('api/onelines/' + onelineId + '/votes?vote_type=down')
+      var promise = $http.post('api/onelines/' + onelineId + '/votes?vote_type=down');
+      return promise;
     };
 
     return api;
