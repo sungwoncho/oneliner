@@ -16,10 +16,12 @@
   </form>
 </section>
 
-<div ng-repeat="oneline in onelines">
+<div ng-repeat="oneline in onelines" ng-controller="OnelineCtrl">
   <h1><a href ng-click="view(oneline.id)">{{ oneline.subject }}</a></h1>
   <p>{{ oneline.definition }}</p>
   <small><a href="users/{{oneline.author.username}}">{{ oneline.author.username }}</a> submitted on {{ oneline.authored_date }}</small>
 
-  <button ng-click="upvote(oneline.id)" class="btn btn-success btn-sm">Upvote</button>
+  <button ng-click="upvote(oneline.id)" class="btn btn-success btn-sm">Up</button>
+  <button ng-click="downvote(oneline.id)" class="btn btn-success btn-sm">Down</button>
+
 </div>

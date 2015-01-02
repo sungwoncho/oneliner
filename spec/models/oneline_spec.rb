@@ -22,15 +22,15 @@ RSpec.describe Oneline, :type => :model do
 
     describe '#is_author?' do
       context 'when current user is author of oneline' do
-        it 'returns true' do
-          expect(oneline.is_author?(user)).to be true
-        end
+        specify { expect(oneline.is_author?(user)).to be true }
       end
 
       context 'when current user is not the author' do
-        it 'returns false' do
-          expect(oneline.is_author?(user_2)).to be false
-        end
+        specify { expect(oneline.is_author?(user_2)).to be false }
+      end
+
+      context 'when user is nil' do
+        specify { expect(oneline.is_author?(nil)).to be false }
       end
     end
   end

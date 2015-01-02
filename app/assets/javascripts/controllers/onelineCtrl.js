@@ -1,5 +1,5 @@
 angular.module('oneliner')
-  .controller('OnelineCtrl', ['$scope', '$location', '$routeParams', 'onelineFactory', 'flash', function($scope, $location, $routeParams, onelineFactory, flash) {
+  .controller('OnelineCtrl', ['$scope', '$location', '$routeParams', 'onelineFactory', 'flash', 'votes', function($scope, $location, $routeParams, onelineFactory, flash, votes) {
 
     if ($routeParams.onelineId) {
       onelineFactory.get({ onelineId: $routeParams.onelineId }, function(oneline) {
@@ -28,6 +28,14 @@ angular.module('oneliner')
     $scope.delete = function() {
       $scope.oneline.$delete();
       $scope.back();
+    };
+
+    $scope.upvote = function(onelineId) {
+      votes.upvote(onelineId)
+    };
+
+    $scope.downvote = function(onelineId) {
+      votes.downvote(onelineId)
     }
 
   }]);

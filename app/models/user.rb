@@ -40,4 +40,8 @@ class User < ActiveRecord::Base
   def downvoted?(oneline)
     votes.where(oneline_id: oneline.id, vote_type: 'down').present?
   end
+
+  def to_param
+    username
+  end
 end

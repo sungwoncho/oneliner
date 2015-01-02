@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   scope "api", defaults: { format: :json } do
     resources :onelines do
       member do
-        resources :votes, only: [:create, :destroy]
+        resources :votes, only: :create
       end
     end
   end

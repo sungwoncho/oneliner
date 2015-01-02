@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('oneliner')
-  .controller('OnelinesCtrl', ['$scope', '$location', 'onelineFactory', 'votes', function($scope, $location, onelineFactory, votes) {
+  .controller('OnelinesCtrl', ['$scope', '$location', 'onelineFactory', function($scope, $location, onelineFactory, votes) {
     $scope.onelines = onelineFactory.query();
 
     $scope.search = function(keyword) {
@@ -15,9 +15,5 @@ angular.module('oneliner')
     $scope.view = function(onelineId) {
       $location.path("/onelines/" + onelineId)
     };
-
-    $scope.upvote = function(onelineId) {
-      votes.upvote(onelineId)
-    }
 
   }]);
