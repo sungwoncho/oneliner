@@ -20,11 +20,11 @@ angular
       })
       .when('/onelines/new', {
         templateUrl: 'form.html',
-        controller: 'OnelinesCtrl'
+        controller: 'OnelineCtrl'
       })
       .when('/onelines/:onelineId', {
         templateUrl: 'show.html',
-        controller: 'OnelinesCtrl'
+        controller: 'OnelineCtrl'
       })
 
     // Send CSRF token
